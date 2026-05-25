@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>පින්බර වෙසක් මංගල්‍යයක් වේවා!</title>
+    <style>
+        body {
+            background-color: #050111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* වෙසක් කාඩ්පත */
+        .vesak-card {
+            width: 380px;
+            height: 600px;
+            background: linear-gradient(135deg, #09021a 0%, #1c053a 50%, #050111 100%);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* 🧘 කේතයෙන් මැවූ බුදු රුව සහ රශ්මි වළල්ල */
+        .buddha-aura {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(255,186,0,0.4) 0%, rgba(255,100,0,0.1) 50%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(0.95); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+        }
+
+        /* බුදු රුවේ හැඩය (Silhouette) */
+        .buddha-shape {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 110px;
+            background: #09021a;
+            clip-path: polygon(50% 0%, 55% 12%, 63% 15%, 58% 25%, 68% 40%, 85% 65%, 90% 85%, 100% 100%, 0% 100%, 10% 85%, 15% 65%, 32% 40%, 42% 25%, 37% 15%, 45% 12%);
+            z-index: 2;
+            box-shadow: inset 0 0 10px rgba(255,215,0,0.5);
+            border-bottom: 2px solid #ffd700;
+        }
+
+        /* 🏮 රන්වන් වෙසක් කූඩුව */
+        .vesak-lantern {
+            width: 70px;
+            height: 70px;
+            margin: 15px auto 0 auto;
+            background: #ffb300;
+            position: relative;
+            transform: rotate(45deg);
+            box-shadow: 0 0 30px #ff9f43, inset 0 0 15px #ff4d4d;
+            animation: gentle-swing 4s ease-in-out infinite alternate;
+            transform-origin: top left;
+            z-index: 2;
+        }
+
+        .vesak-lantern::before, .vesak-lantern::after {
+            content: '';
+            position: absolute;
+            background: #ffaa00;
+            width: 100%;
+            height: 100%;
+        }
+        .vesak-lantern::before { transform: rotate(30deg); background: rgba(255, 159, 67, 0.8); }
+        .vesak-lantern::after { transform: rotate(60deg); background: rgba(255, 213, 0, 0.8); }
+
+        @keyframes gentle-swing {
+            0% { transform: rotate(40deg); }
+            100% { transform: rotate(50deg); }
+        }
+
+        h1 {
+            color: #ffd700;
+            font-size: 26px;
+            margin-top: 35px;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+
+        .wishes {
+            font-size: 15px;
+            line-height: 1.8;
+            margin: 25px 10px;
+            color: #f1f0f5;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+            position: relative;
+            z-index: 3;
+        }
+
+        /* 🪔 දැල්වෙන පහන */
+        .oil-lamp {
+            font-size: 32px;
+            position: absolute;
+            bottom: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            filter: drop-shadow(0 0 8px #ffb300);
+            animation: flicker 0.15s ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px #ffcc00); }
+        }
+
+        /* නම පෙනෙන ස්ථානය */
+        .sender-name {
+            font-size: 19px;
+            color: #00ffcc;
+            font-weight: bold;
+            position: absolute;
+            bottom: 75px;
+            width: 100%;
+            left: 0;
+            min-height: 28px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+            z-index: 3;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: #a29bfe;
+            position: absolute;
+            bottom: 25px;
+            width: 100%;
+            left: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            z-index: 3;
+        }
+
+        .secret-dot {
+            cursor: default;
+            color: #ffd700;
+            font-weight: bold;
+            display: inline-block;
+            padding: 0 5px;
+        }
+
+        /* 🤫 රහස් Popup එක */
+        .input-box {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 5, 30, 0.98);
+            border: 2px solid #00ffcc;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.95);
+            z-index: 10;
+            width: 85%;
+            box-sizing: border-box;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ffd700;
+            background: #251442;
+            color: white;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .input-box button {
+            background: #00ffcc;
+            color: #0d0221;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .share-section {
+            display: none;
+            margin-top: 12px;
+            background: #15062b;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px dashed #00ffcc;
+        }
+        
+        .share-url {
+            font-size: 11px;
+            word-break: break-all;
+            color: #ffd700;
+            user-select: all;
+            margin-top: 5px;
+            background: #200a3e;
+            padding: 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vesak-card">
+        <div class="vesak-lantern"></div>
+        
+        <h1>සුභ වෙසක් මංගල්‍යයක් වේවා</h1>
+        
+        <div class="wishes">
+            ලැබුවාවූ පින්බර වෙසක් උදානය<br>
+            ...ඔබේ සිතට නිවනත්, ජීවිතයට ආලෝකය...<br>
+            උදාවේවායි සැදැහැ සිතින් ප්‍රාර්ථනා කරමි!
+        </div>
+
+        <div class="buddha-aura"></div>
+        <div class="buddha-shape"></div>
+
+        <div class="oil-lamp">🪔</div>
+
+        <div class="sender-name" id="nameDisplay">- මෙත් සිතිනි -</div>
+
+        <div class="footer-text">
+            සැමට පින්බර වෙසක් මංගල්‍යයක් වේවා<span class="secret-dot" onclick="showSecretBox()">.</span>
+        </div>
+
+        <div class="input-box" id="secretInputBox">
+            <p style="font-size: 14px; margin-top:0; color: #ffd700; font-weight: bold;">🤫 ඔබේ නමින් අලුත් ලින්ක් එකක් හදන්න</p>
+            <input type="text" id="userNameInput" placeholder="ඔබේ නම මෙතන ලියන්න...">
+            <button onclick="generateLink()">ලින්ක් එක සාදන්න</button>
+            <button onclick="closeBox()" style="background:#ff4d4d; color:white; margin-top:5px;">වහන්න</button>
+            
+            <div class="share-section" id="shareSection">
+                <p style="font-size: 12px; margin: 5px 0; color: #00ffcc;">👇 මේ ලින්ක් එක Copy කරලා යවන්න:</p>
+                <div class="share-url" id="generatedUrl"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            
+            if (name) {
+                document.getElementById('nameDisplay').innerText = "- " + decodeURIComponent(name) + " -";
+            } else {
+                document.getElementById('nameDisplay').innerText = "- මෙත් සිතිනි -";
+            }
+        };
+
+        function showSecretBox() {
+            document.getElementById('secretInputBox').style.display = 'block';
+            document.getElementById('shareSection').style.display = 'none';
+            document.getElementById('userNameInput').value = '';
+        }
+
+        function closeBox() {
+            document.getElementById('secretInputBox').style.display = 'none';
+        }
+
+        function generateLink() {
+            const nameInput = document.getElementById('userNameInput').value.trim();
+            if (nameInput !== "") {
+                const baseUrl = window.location.href.split('?')[0];
+                const newUrl = baseUrl + "?name=" + encodeURIComponent(nameInput);
+                
+                document.getElementById('generatedUrl').innerText = newUrl;
+                document.getElementById('shareSection').style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>
